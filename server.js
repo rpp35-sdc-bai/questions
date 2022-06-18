@@ -8,10 +8,12 @@ const port = /* env.process.PORT || */ 3000;
 // or else you will have no body in your requests
 app.use(express.json())
 
-app.use('/products', require('./routes/products'))
 app.use('/questions', require('./routes/questions'))
-app.use('/reviews', require('./routes/reviews'))
 
-app.listen(port, () => {
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
     console.log(`listening on ${port}`)
-})
+  })
+}
+
+module.exports = app;
