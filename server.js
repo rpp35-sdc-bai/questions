@@ -1,4 +1,6 @@
+require('dotenv').config()
 const express = require('express');
+const init = require('./database/index.js');
 
 const app = express()
 
@@ -9,6 +11,10 @@ const port = /* env.process.PORT || */ 3000;
 app.use(express.json())
 
 app.use(require('./routes/questions'))
+
+if (process.env.INIT === 'true') {
+  init();
+}
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {
