@@ -17,7 +17,7 @@ module.exports = async function init () {
   await client.query('DROP TABLE IF EXISTS question CASCADE;')
   await client.query(`CREATE TABLE question (
     id SERIAL NOT NULL PRIMARY KEY,
-    prodect_id INT NOT NULL,
+    product_id INT NOT NULL,
     body VARCHAR(1000) NOT NULL,
     date_written BIGINT,
     asker_name VARCHAR(60),
