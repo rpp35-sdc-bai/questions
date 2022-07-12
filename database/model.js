@@ -60,12 +60,34 @@ module.exports = {
     const query = `INSERT INTO question (product_id, body, date_written, asker_name, asker_email, reported, helpful)
                    VALUES ($1, $2, $3, $4, $5, $6, $7)
                    RETURNING *;`;
-    const values = [product_id, body, date_written, name, email, reported, helpful]
+    const values = [product_id, body, date_written, name, email, reported, helpful];
     try {
       result = await client.query(query, values);
-      console.log(result.rows[0])
+      console.log('added a qustion', result.rows[0])
     } catch (err) {
-      console.err(err);
+      console.log(err);
+    }
+  },
+
+  addAnswers: async(question_id, body, name, email, photos) => {
+    const client = await pool.connect();
+    const date_written = new Date().getTime();
+    const [reported, helpful] = [0, 0];
+    const query = `INSERT INTO answer (question_id, body, date_written, answerer_name, answerer_email, reported, helpful)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7)
+                   RETURNING *;`;
+    const values = [question_id, body, date_written, name, email, reported, helpful];
+    try {
+      const result = await client.query(query, values);
+      console.log('added an answer', result.rows[0]);
+      const answer_id = result.rows[0].id;
+      const pQuery = `INSERT INTO photo (answer_id, url) VALUES ($1, $2) RETURNING *;`;
+      for (let i = 0; i < photos.length; i ++) {
+        const pResult = await client.query(pQuery, [answer_id, photos[i]]);
+        console.log('added a photo', pResult.rows[0]);
+      }
+    } catch (err) {
+      console.log(err)
     }
   }
 }

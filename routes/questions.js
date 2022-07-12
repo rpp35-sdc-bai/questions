@@ -20,4 +20,11 @@ router.post('/qa/questions', async (req, res, next) => {
   res.sendStatus(201);
 })
 
+router.post('/qa/questions/:question_id/answers', async (req, res, next) => {
+  const {question_id} = req.params;
+  const {body, name, email, photos} = req.body;
+  console.log(question_id, body, name, email, photos);
+  const result = await model.addAnswers(question_id, body, name, email, photos);
+  res.sendStatus(201);
+})
 module.exports = router;
