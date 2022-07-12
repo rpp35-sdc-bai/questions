@@ -87,7 +87,55 @@ module.exports = {
         console.log('added a photo', pResult.rows[0]);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
+    }
+  },
+
+  updateQuestionHelpful: async(question_id) => {
+    const client = await pool.connect();
+    const query = `UPDATE question SET helpful = helpful + 1 WHERE id = $1 RETURNING *;`;
+    const values = [question_id];
+    try{
+      const result = await client.query(query, values);
+      console.log(result.rows[0]);
+    } catch(err) {
+      console.log(err);
+    }
+  },
+
+  updateQuestionReport: async(question_id) => {
+    const client = await pool.connect();
+    const query = `UPDATE question SET reported = 1 WHERE id = $1 RETURNING *;`;
+    const values = [question_id];
+    try{
+      const result = await client.query(query, values);
+      console.log(result.rows[0]);
+    } catch(err) {
+      console.log(err);
+    }
+  },
+
+  updateAnswerHelpful: async(answer_id) => {
+    const client = await pool.connect();
+    const query = `UPDATE answer SET helpful = helpful + 1 WHERE id = $1 RETURNING *;`;
+    const values = [answer_id];
+    try{
+      const result = await client.query(query, values);
+      console.log(result.rows[0]);
+    } catch(err) {
+      console.log(err);
+    }
+  },
+
+  updateAnswerReport: async(answer_id) => {
+    const client = await pool.connect();
+    const query = `UPDATE answer SET reported = 1 WHERE id = $1 RETURNING *;`;
+    const values = [answer_id];
+    try{
+      const result = await client.query(query, values);
+      console.log(result.rows[0]);
+    } catch(err) {
+      console.log(err);
     }
   }
 }
