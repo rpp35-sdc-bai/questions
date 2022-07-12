@@ -24,7 +24,7 @@ module.exports = {
       }
       return result;
     } catch (err) {
-      console.error(err);
+      return err;
     }
   },
 
@@ -47,7 +47,7 @@ module.exports = {
       }
       return result;
     } catch (err) {
-      console.error(err);
+      return err;
     }
   }
 }

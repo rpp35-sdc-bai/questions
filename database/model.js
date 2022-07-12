@@ -51,5 +51,21 @@ module.exports = {
     const result = await client.query(query);
     client.release();
     return result;
+  },
+
+  addQuestions: async(product_id, body, name, email) => {
+    const client = await pool.connect();
+    const date_written = new Date().getTime();
+    const [reported, helpful]= [0, 0];
+    const query = `INSERT INTO question (product_id, body, date_written, asker_name, asker_email, reported, helpful)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7)
+                   RETURNING *;`;
+    const values = [product_id, body, date_written, name, email, reported, helpful]
+    try {
+      result = await client.query(query, values);
+      console.log(result.rows[0])
+    } catch (err) {
+      console.err(err);
+    }
   }
 }

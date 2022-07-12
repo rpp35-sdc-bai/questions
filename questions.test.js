@@ -1,14 +1,13 @@
 const app = require('./server.js');
 const request = require('supertest');
 
-describe('Initial test skeleton', () => {
-  test('should return sample text for requests along base questions routes', async () => {
+describe('question route tests', () => {
+  test('should return an object from question get request', async () => {
     try {
       const response = await request(app).get('/qa/questions').set('Accept', 'application/json');
-      expect(response.text).toBe('list of questions');
+      expect(typeof response).toBe('object');
     } catch(error) {
       console.log(error);
     }
   })
-
 });
