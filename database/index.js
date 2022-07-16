@@ -16,7 +16,7 @@ module.exports = async function init () {
   //Drop and create question table
   await client.query('DROP TABLE IF EXISTS question CASCADE;')
   await client.query(`CREATE TABLE question (
-    id SERIAL NOT NULL PRIMARY KEY,
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     product_id INT NOT NULL,
     body VARCHAR(1000) NOT NULL,
     date_written BIGINT,
@@ -29,7 +29,7 @@ module.exports = async function init () {
   //answer table
   await client.query('DROP TABLE IF EXISTS answer CASCADE;')
   await client.query(`CREATE TABLE answer (
-    id SERIAL NOT NULL PRIMARY KEY,
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     question_id INT NOT NULL,
     body VARCHAR(1000) NOT NULL,
     date_written BIGINT,
@@ -44,9 +44,11 @@ module.exports = async function init () {
   //photo table
   await client.query('DROP TABLE IF EXISTS photo CASCADE;')
   await client.query(`CREATE TABLE photo (
-    id SERIAL NOT NULL PRIMARY KEY,
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     answer_id INT NOT NULL,
-    url VARCHAR(1000) NULL
+    url VARCHAR(1000) NULL,
+    CONSTRAINT fk_quesitons
+      FOREIGN KEY(answer_id) REFERENCES answer(id)
   );`)
 
   const result = await Promise.allSettled([
