@@ -2,14 +2,38 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export const options = {
+  // stages: [
+  //   { duration: '30s', target: 1 },
+  //   { duration: '30s', target: 1 },
+  // ],
+  // stages: [
+  //   { duration: '30s', target: 15 },
+  //   { duration: '30s', target: 15 },
+  //   { duration: '30s', target: 15 },
+  //   { duration: '30s', target: 0 },
+  // ],
+  // stages: [
+  //   { duration: '30s', target: 100 },
+  //   { duration: '30s', target: 150 },
+  //   { duration: '30s', target: 100 },
+  //   { duration: '30s', target: 0 },
+  // ],
   stages: [
-    { duration: '30s', target: 20 },
-    { duration: '30s', target: 10 },
-    { duration: '20s', target: 0 },
+    { duration: '30s', target: 5000 },
+    { duration: '30s', target: 10000 },
+    { duration: '30s', target: 5000 },
+    { duration: '30s', target: 0 },
   ],
+  // ext: {
+  //   loadimpact: {
+  //     projectID: 3593732,
+  //     // Test runs with the same name groups test runs together
+  //     name: "questions route 1000 RPS load"
+  //   }
+  // }
 };
 
 export default function () {
-  const res = http.get('http://localhost:3000/qa/questions/34/answers');
+  const res = http.get('http://localhost:3000/qa/questions/?product_id=896571');
   sleep(1);
 }

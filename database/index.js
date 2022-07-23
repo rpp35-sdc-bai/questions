@@ -1,11 +1,19 @@
 const {Client} = require('pg');
 
 module.exports = async function init () {
+  // const client = new Client({
+  //   user: 'xuenjie',
+  //   host: 'localhost',
+  //   database: 'questions',
+  //   password: '',
+  //   port: '5432',
+  // });
+
   const client = new Client({
     user: 'xuenjie',
-    host: 'localhost',
-    database: 'questions',
-    password: '',
+    host: 'ec2-52-53-160-9.us-west-1.compute.amazonaws.com',
+    database: 'postgres',
+    password: 'password',
     port: '5432',
   });
 
@@ -51,11 +59,17 @@ module.exports = async function init () {
       FOREIGN KEY(answer_id) REFERENCES answer(id)
   );`)
 
-  const result = await Promise.allSettled([
+  const result = await Promise.all([
     client.query("COPY question from '/Users/xuenjie/questions/data/questions.csv' DELIMITER ',' CSV HEADER;"),
     client.query("COPY answer from '/Users/xuenjie/questions/data/answers.csv' DELIMITER ',' CSV HEADER;"),
     client.query("COPY photo from '/Users/xuenjie/questions/data/answers_photos.csv' DELIMITER ',' CSV HEADER;"),
   ])
+
+  const createIndices = await Promise.all([
+    client.query('CREATE INDEX questions_index ON question(product_id);'),
+    client.query('CREATE INDEX answers_index ON answer(question_id);'),
+    client.query('CREATE INDEX photos_index ON photo(answer_id);')
+  ]);
 
   console.log(result, 'copyed success');
 
