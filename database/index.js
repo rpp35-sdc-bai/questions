@@ -10,7 +10,7 @@ module.exports = async function init () {
   // });
 
   const client = new Client({
-    user: 'xuenjie',
+    user: 'postgres',
     host: 'ec2-52-53-160-9.us-west-1.compute.amazonaws.com',
     database: 'postgres',
     password: 'password',
@@ -60,9 +60,9 @@ module.exports = async function init () {
   );`)
 
   const result = await Promise.all([
-    client.query("COPY question from '/Users/xuenjie/questions/data/questions.csv' DELIMITER ',' CSV HEADER;"),
-    client.query("COPY answer from '/Users/xuenjie/questions/data/answers.csv' DELIMITER ',' CSV HEADER;"),
-    client.query("COPY photo from '/Users/xuenjie/questions/data/answers_photos.csv' DELIMITER ',' CSV HEADER;"),
+    client.query("COPY question from '/questions/data/questions.csv' DELIMITER ',' CSV HEADER;"),
+    client.query("COPY answer from '/questions/data/answers.csv' DELIMITER ',' CSV HEADER;"),
+    client.query("COPY photo from '/questions/data/answers_photos.csv' DELIMITER ',' CSV HEADER;"),
   ])
 
   const createIndices = await Promise.all([
