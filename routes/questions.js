@@ -4,6 +4,10 @@ const controllers = require('../database/controllers.js');
 
 const router = express.Router();
 
+router.get('/test', async (req, res) => {
+  res.send('hello world')
+})
+
 router.get('/qa/questions', async (req, res, next) => {
   const result = await controllers.getQuestions(req);
   res.send(result);
