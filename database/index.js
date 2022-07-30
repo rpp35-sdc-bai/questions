@@ -11,7 +11,7 @@ module.exports = async function init () {
 
   const client = new Client({
     user: 'postgres',
-    host: 'ec2-52-53-160-9.us-west-1.compute.amazonaws.com',
+    host: 'ec2-52-53-158-107.us-west-1.compute.amazonaws.com',
     database: 'postgres',
     password: 'password',
     port: '5432',
