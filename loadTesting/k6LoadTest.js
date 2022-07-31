@@ -2,10 +2,10 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export const options = {
-   stages: [
-     { duration: '30s', target: 1 },
-     { duration: '30s', target: 1 },
-   ],
+  // stages: [
+  //   { duration: '30s', target: 1 },
+  //   { duration: '30s', target: 1 },
+  // ],
   // stages: [
   //   { duration: '30s', target: 15 },
   //   { duration: '30s', target: 15 },
@@ -18,12 +18,12 @@ export const options = {
   //   { duration: '30s', target: 100 },
   //   { duration: '30s', target: 0 },
   // ],
-  //stages: [
-  //  { duration: '30s', target: 5000 },
-  //  { duration: '30s', target: 10000 },
-  //  { duration: '30s', target: 5000 },
-  //  { duration: '30s', target: 0 },
-  //],
+   stages: [
+    { duration: '40s', target: 1000 },
+    { duration: '40s', target: 1200 },
+    { duration: '40s', target: 1000 },
+    { duration: '40s', target: 0 },
+   ],
   // ext: {
   //   loadimpact: {
   //     projectID: 3593732,
