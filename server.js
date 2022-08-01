@@ -5,7 +5,7 @@ const init = require('./database/index.js');
 
 const app = express()
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT ||5000;
 
 // make sure you have accept application/json in your headers
 // or else you will have no body in your requests
