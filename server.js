@@ -2,6 +2,7 @@ require('newrelic');
 require('dotenv').config()
 const express = require('express');
 const init = require('./database/index.js');
+const redisClient = require('./redisClient.js');
 
 const app = express()
 
@@ -18,7 +19,9 @@ if (process.env.INIT === 'true') {
 }
 
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(port, () => {
+  app.listen(port, async () => {
+    await redisClient.connect();
+    console.log('redis connected')
     console.log(`listening on ${port}`)
   })
 }
