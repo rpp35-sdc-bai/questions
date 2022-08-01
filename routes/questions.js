@@ -1,6 +1,9 @@
 const express = require('express');
 const model = require('../database/model.js');
 const controllers = require('../database/controllers.js');
+const redis = require('redis');
+
+const redisClient = redis.createClient();
 
 const router = express.Router();
 
@@ -9,13 +12,33 @@ router.get('/test', async (req, res) => {
 })
 
 router.get('/qa/questions', async (req, res, next) => {
-  const result = await controllers.getQuestions(req);
-  res.send(result);
+  const { product_id } = req.query;
+  await redisClient.connect();
+  const rdResult = await redisClient.get(`p${product_id}`);
+  if (rdResult != null) {
+    await redisClient.disconnect();
+    res.send(JSON.parse(rdResult));
+  } else {
+    const result = await controllers.getQuestions(req);
+    await redisClient.set(`p${product_id}`, JSON.stringify(result));
+    await redisClient.disconnect();
+    res.send(result);
+  }
 })
 
 router.get('/qa/questions/:question_id/answers', async (req, res, next) => {
-  const result = await controllers.getAnswers(req);
-  res.send(result);
+  const { question_id } = req.params;
+  await redisClient.connect();
+  const rdResult = await redisClient.get(`q${question_id}`);
+  if (rdResult != null) {
+    await redisClient.disconnect();
+    res.send(JSON.parse(rdResult));
+  } else {
+    const result = await controllers.getAnswers(req);
+    await redisClient.set(`q${question_id}`, JSON.stringify(result));
+    await redisClient.disconnect();
+    res.send(result);
+  }
 })
 
 router.post('/qa/questions', async (req, res, next) => {
