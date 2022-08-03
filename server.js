@@ -14,6 +14,10 @@ app.use(express.json())
 
 app.use(require('./routes/questions'))
 
+app.get('/loaderio-7427036c0bcca9bbba77cd378c4f14e9', (req, res) => {
+  res.send('loaderio-7427036c0bcca9bbba77cd378c4f14e9');
+})
+
 if (process.env.INIT === 'true') {
   init();
 }

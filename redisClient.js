@@ -1,11 +1,7 @@
 const redis = require('redis');
 
 const redisClient = redis.createClient({
-  socket: {
-      host: 'localhost',
-      port: 6379
-  },
-  password: ''
+  url: 'redis://default@ec2-18-144-23-229.us-west-1.compute.amazonaws.com:6379'
 });
 
 module.exports = redisClient;
