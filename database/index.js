@@ -1,21 +1,21 @@
 const {Client} = require('pg');
 
 module.exports = async function init () {
-  // const client = new Client({
-  //   user: 'xuenjie',
-  //   host: 'localhost',
-  //   database: 'questions',
-  //   password: '',
-  //   port: '5432',
-  // });
-
   const client = new Client({
-    user: 'postgres',
-    host: 'ec2-52-53-158-107.us-west-1.compute.amazonaws.com',
-    database: 'postgres',
-    password: 'password',
+    user: 'xuenjie',
+    host: 'localhost',
+    database: 'questions',
+    password: '',
     port: '5432',
   });
+
+  // const client = new Client({
+  //   user: 'postgres',
+  //   host: 'ec2-52-53-158-107.us-west-1.compute.amazonaws.com',
+  //   database: 'postgres',
+  //   password: 'password',
+  //   port: '5432',
+  // });
 
   client.connect()
   .then(() => console.log('connected to db'))

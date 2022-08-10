@@ -19,10 +19,8 @@ export const options = {
   //   { duration: '30s', target: 0 },
   // ],
    stages: [
-    { duration: '40s', target: 1000 },
-    { duration: '40s', target: 1200 },
-    { duration: '40s', target: 1000 },
-    { duration: '40s', target: 0 },
+    { duration: '1s', target: 70 },
+    { duration: '59s', target: 70 },
    ],
   // ext: {
   //   loadimpact: {
@@ -34,6 +32,6 @@ export const options = {
 };
 
 export default function () {
-  const res = http.get('http://ec2-13-57-38-131.us-west-1.compute.amazonaws.com:5000/qa/questions?product_id=896571');
+  const res = http.get('http://localhost:3000/qa/questions/3000001/answers');
   sleep(1);
 }
